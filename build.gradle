@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 
-group = 'com.github.intrigus:mavigen'
+group = 'com.github.intrigus'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
