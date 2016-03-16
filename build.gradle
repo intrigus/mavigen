@@ -6,9 +6,8 @@ group = 'com.github.intrigus'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-sourceSets {
-    main.java.srcDir 'src/'        
-}
+sourceSets.main.java { srcDirs = 'src/' }
+sourceSets.main.resources { srcDirs = ["src/"]; exclude "**/*.java" }
 
 compileJava.options.encoding = 'UTF-8';
 
