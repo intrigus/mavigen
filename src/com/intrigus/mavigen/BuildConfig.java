@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.jnigen;
+package com.intrigus.mavigen;
 
 /** Specifies the global properties of a native build.</p>
  * 

@@ -14,22 +14,22 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.jnigen;
+package com.intrigus.mavigen;
 
 import java.io.InputStream;
 import java.nio.Buffer;
 import java.util.ArrayList;
 
-import com.badlogic.gdx.jnigen.parsing.CMethodParser;
-import com.badlogic.gdx.jnigen.parsing.CMethodParser.CMethod;
-import com.badlogic.gdx.jnigen.parsing.CMethodParser.CMethodParserResult;
-import com.badlogic.gdx.jnigen.parsing.JavaMethodParser;
-import com.badlogic.gdx.jnigen.parsing.JavaMethodParser.Argument;
-import com.badlogic.gdx.jnigen.parsing.JavaMethodParser.JavaMethod;
-import com.badlogic.gdx.jnigen.parsing.JavaMethodParser.JavaSegment;
-import com.badlogic.gdx.jnigen.parsing.JavaMethodParser.JniSection;
-import com.badlogic.gdx.jnigen.parsing.JniHeaderCMethodParser;
-import com.badlogic.gdx.jnigen.parsing.RobustJavaMethodParser;
+import com.intrigus.mavigen.parsing.CMethodParser;
+import com.intrigus.mavigen.parsing.JavaMethodParser;
+import com.intrigus.mavigen.parsing.JniHeaderCMethodParser;
+import com.intrigus.mavigen.parsing.RobustJavaMethodParser;
+import com.intrigus.mavigen.parsing.CMethodParser.CMethod;
+import com.intrigus.mavigen.parsing.CMethodParser.CMethodParserResult;
+import com.intrigus.mavigen.parsing.JavaMethodParser.Argument;
+import com.intrigus.mavigen.parsing.JavaMethodParser.JavaMethod;
+import com.intrigus.mavigen.parsing.JavaMethodParser.JavaSegment;
+import com.intrigus.mavigen.parsing.JavaMethodParser.JniSection;
 
 /** Goes through a Java source directory, checks each .java file for native methods and emits C/C++ code accordingly, both .h and
  * .cpp files.
@@ -42,7 +42,7 @@ import com.badlogic.gdx.jnigen.parsing.RobustJavaMethodParser;
  * which is allowed in Java).
  * 
  * <pre>
- * package com.badlogic.jnigen;
+ * package com.badlogic.mavigen;
  * 
  * public class MyJniClass {
  *   /*JNI
@@ -151,7 +151,7 @@ import com.badlogic.gdx.jnigen.parsing.RobustJavaMethodParser;
  * 
  * <h2>.h/.cpp File Generation</h2> The .h files are created via javah, which has to be on your path. The Java classes have to be
  * compiled and accessible to the javah tool. The name of the generated .h/.cpp files is the fully qualified name of the class,
- * e.g. com.badlogic.jnigen.MyJniClass.h/.cpp. The generator takes the following parameters as input:
+ * e.g. com.badlogic.mavigen.MyJniClass.h/.cpp. The generator takes the following parameters as input:
  * 
  * <ul>
  * <li>Java source directory, containing the .java files, e.g. src/ in an Eclipse project</li>

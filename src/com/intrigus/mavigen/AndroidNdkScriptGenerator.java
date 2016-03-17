@@ -14,12 +14,12 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.jnigen;
+package com.intrigus.mavigen;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.jnigen.BuildTarget.TargetOs;
-import com.badlogic.gdx.jnigen.FileDescriptor.FileType;
+import com.intrigus.mavigen.BuildTarget.TargetOs;
+import com.intrigus.mavigen.FileDescriptor.FileType;
 
 public class AndroidNdkScriptGenerator {
 	public void generate (BuildConfig config, BuildTarget target) {
@@ -56,11 +56,11 @@ public class AndroidNdkScriptGenerator {
 
 		// create Application.mk file
 		FileDescriptor application = config.jniDir.child("Application.mk");
-		application.writeString(new FileDescriptor("com/badlogic/gdx/jnigen/resources/scripts/Application.mk.template",
+		application.writeString(new FileDescriptor("com/intrigus/mavigen/resources/scripts/Application.mk.template",
 			FileType.Classpath).readString(), false);
 
 		// create Android.mk file
-		String template = new FileDescriptor("com/badlogic/gdx/jnigen/resources/scripts/Android.mk.template", FileType.Classpath)
+		String template = new FileDescriptor("com/intrigus/mavigen/resources/scripts/Android.mk.template", FileType.Classpath)
 			.readString();
 
 		StringBuffer srcFiles = new StringBuffer();

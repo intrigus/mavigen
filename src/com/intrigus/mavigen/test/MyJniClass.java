@@ -14,20 +14,20 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.jnigen.test;
+package com.intrigus.mavigen.test;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 
 import javax.swing.JFrame;
 
-import com.badlogic.gdx.jnigen.AntScriptGenerator;
-import com.badlogic.gdx.jnigen.BuildConfig;
-import com.badlogic.gdx.jnigen.BuildExecutor;
-import com.badlogic.gdx.jnigen.BuildTarget;
-import com.badlogic.gdx.jnigen.BuildTarget.TargetOs;
-import com.badlogic.gdx.jnigen.JniGenSharedLibraryLoader;
-import com.badlogic.gdx.jnigen.NativeCodeGenerator;
+import com.intrigus.mavigen.AntScriptGenerator;
+import com.intrigus.mavigen.BuildConfig;
+import com.intrigus.mavigen.BuildExecutor;
+import com.intrigus.mavigen.BuildTarget;
+import com.intrigus.mavigen.JniGenSharedLibraryLoader;
+import com.intrigus.mavigen.NativeCodeGenerator;
+import com.intrigus.mavigen.BuildTarget.TargetOs;
 
 public class MyJniClass {
 

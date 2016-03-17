@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.jnigen.parsing;
+package com.intrigus.mavigen.parsing;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;

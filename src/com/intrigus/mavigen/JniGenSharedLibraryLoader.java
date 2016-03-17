@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.jnigen;
+package com.intrigus.mavigen;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -108,7 +108,7 @@ public class JniGenSharedLibraryLoader {
 
 	private String extractLibrary (String sharedLibName) {
 		String srcCrc = crc(JniGenSharedLibraryLoader.class.getResourceAsStream("/" + sharedLibName));
-		File nativesDir = new File(System.getProperty("java.io.tmpdir") + "/jnigen/" + srcCrc);
+		File nativesDir = new File(System.getProperty("java.io.tmpdir") + "/mavigen/" + srcCrc);
 		File nativeFile = new File(nativesDir, sharedLibName);
 
 		String extractedCrc = null;

@@ -14,12 +14,12 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.jnigen;
+package com.intrigus.mavigen;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.jnigen.BuildTarget.TargetOs;
-import com.badlogic.gdx.jnigen.FileDescriptor.FileType;
+import com.intrigus.mavigen.BuildTarget.TargetOs;
+import com.intrigus.mavigen.FileDescriptor.FileType;
 
 /** Generates Ant scripts for multiple native build targets based on the given {@link BuildConfig}.</p>
  * 
@@ -74,7 +74,7 @@ public class AntScriptGenerator {
 
 		// copy memcpy_wrap.c, needed if your build platform uses the latest glibc, e.g. Ubuntu 12.10
 		if (config.jniDir.child("memcpy_wrap.c").exists() == false) {
-			new FileDescriptor("com/badlogic/gdx/jnigen/resources/scripts/memcpy_wrap.c", FileType.Classpath).copyTo(config.jniDir
+			new FileDescriptor("com/intrigus/mavigen/resources/scripts/memcpy_wrap.c", FileType.Classpath).copyTo(config.jniDir
 				.child("memcpy_wrap.c"));
 		}
 
@@ -114,7 +114,7 @@ public class AntScriptGenerator {
 		}
 
 		// generate the master build script
-		String template = new FileDescriptor("com/badlogic/gdx/jnigen/resources/scripts/build.xml.template", FileType.Classpath)
+		String template = new FileDescriptor("com/intrigus/mavigen/resources/scripts/build.xml.template", FileType.Classpath)
 			.readString();
 		StringBuffer clean = new StringBuffer();
 		StringBuffer compile = new StringBuffer();
@@ -146,7 +146,7 @@ public class AntScriptGenerator {
 	}
 
 	private void copyJniHeaders (String jniDir) {
-		final String pack = "com/badlogic/gdx/jnigen/resources/headers";
+		final String pack = "com/intrigus/mavigen/resources/headers";
 		String files[] = {"classfile_constants.h", "jawt.h", "jdwpTransport.h", "jni.h", "linux/jawt_md.h", "linux/jni_md.h",
 			"mac/jni_md.h", "win32/jawt_md.h", "win32/jni_md.h"};
 
@@ -195,7 +195,7 @@ public class AntScriptGenerator {
 		// special case for android
 		if (target.os == TargetOs.Android) {
 			new AndroidNdkScriptGenerator().generate(config, target);
-			String template = new FileDescriptor("com/badlogic/gdx/jnigen/resources/scripts/build-android.xml.template",
+			String template = new FileDescriptor("com/intrigus/mavigen/resources/scripts/build-android.xml.template",
 				FileType.Classpath).readString();
 			template = template.replace("%precompile%", target.preCompileTask == null ? "" : target.preCompileTask);
 			template = template.replace("%postcompile%", target.postCompileTask == null ? "" : target.postCompileTask);
@@ -205,10 +205,10 @@ public class AntScriptGenerator {
 		// read template file from resources
 		String template = null;
 		if (target.os == TargetOs.IOS) {
-			template = new FileDescriptor("com/badlogic/gdx/jnigen/resources/scripts/build-ios.xml.template", FileType.Classpath)
+			template = new FileDescriptor("com/intrigus/mavigen/resources/scripts/build-ios.xml.template", FileType.Classpath)
 				.readString();
 		} else {
-			template = new FileDescriptor("com/badlogic/gdx/jnigen/resources/scripts/build-target.xml.template", FileType.Classpath)
+			template = new FileDescriptor("com/intrigus/mavigen/resources/scripts/build-target.xml.template", FileType.Classpath)
 				.readString();
 		}
 
