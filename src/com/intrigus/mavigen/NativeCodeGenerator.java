@@ -183,6 +183,7 @@ public class NativeCodeGenerator {
 	JavaMethodParser javaMethodParser = new RobustJavaMethodParser();
 	CMethodParser cMethodParser = new JniHeaderCMethodParser();
 	CMethodParserResult cResult;
+	boolean forceGeneration;
 
 	/** Generates .h/.cpp files from the Java files found in "src/", with their .class files being in "bin/". The generated files
 	 * will be stored in "jni/". All paths are relative to the applications working directory.
@@ -235,6 +236,16 @@ public class NativeCodeGenerator {
 		// process the source directory, emitting c/c++ files to jniDir
 		processDirectory(this.sourceDir);
 	}
+	
+	/**
+	 * Forces the generation of objective c files
+	 * @param force If true, forces the generation of obj c files regardless of their age
+	 * @return Returns this from chaining
+	 */
+	public NativeCodeGenerator forceGeneration(boolean force){
+		forceGeneration = force;
+		return this;
+	}
 
 	private void processDirectory (FileDescriptor dir) throws Exception {
 		FileDescriptor[] files = dir.list();
@@ -251,7 +262,7 @@ public class NativeCodeGenerator {
 					String className = getFullyQualifiedClassName(file);
 					FileDescriptor hFile = new FileDescriptor(jniDir.path() + "/" + className + ".h");
 					FileDescriptor cppFile = new FileDescriptor(jniDir + "/" + className + ".m");
-					if (file.lastModified() < cppFile.lastModified()) {
+					if ((file.lastModified() < cppFile.lastModified()) || !forceGeneration) {
 						System.out.println("C/C++ for '" + file.path() + "' up to date");
 						continue;
 					}
