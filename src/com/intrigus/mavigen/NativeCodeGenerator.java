@@ -475,7 +475,7 @@ public class NativeCodeGenerator {
 			// as we will output JNI code to get pointers to strings, arrays
 			// and direct buffers.
 			Argument javaArg = javaMethod.getArguments().get(i);
-			if (!javaArg.getType().isPlainOldDataType() && !javaArg.getType().isObject() && appendPrefix) {
+			if ((!javaMethod.isManual() && !javaArg.getType().isString()) && !javaArg.getType().isPlainOldDataType() && !javaArg.getType().isObject() && appendPrefix) {
 				buffer.append(JNI_ARG_PREFIX);
 			}
 			// output the name of the argument
