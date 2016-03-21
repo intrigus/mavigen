@@ -10,6 +10,7 @@ target/
 
 *.class
 *.jar
+!gradle/*/*.jar
 *.war
 *.ear
 hs_err_pid*
