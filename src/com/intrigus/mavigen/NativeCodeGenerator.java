@@ -36,7 +36,8 @@ import com.intrigus.mavigen.parsing.JavaMethodParser.JniSection;
  * 
  * <h2>Augmenting Java Files with C/C++</h2> C/C++ code can be directly added to native methods in the Java file as block comments
  * starting at the same line as the method signature. Custom JNI code that is not associated with a native method can be added via
- * a special block comment as shown below.</p>
+ * a special block comment as shown below.
+ * </p>
  * 
  * All arguments can be accessed by the name specified in the Java native method signature (unless you use $ in your identifier
  * which is allowed in Java).
@@ -59,10 +60,12 @@ import com.intrigus.mavigen.parsing.JavaMethodParser.JniSection;
  * 
  * The generated header file is automatically included in the .cpp file. Methods and custom JNI code can be mixed throughout the
  * Java file, their order is preserved in the generated .cpp file. Method overloading is supported but not recommended as the
- * overloading detection is very basic.</p>
+ * overloading detection is very basic.
+ * </p>
  * 
  * If a native method has strings, one dimensional primitive arrays or direct {@link Buffer} instances as arguments, JNI setup and
- * cleanup code is automatically generated.</p>
+ * cleanup code is automatically generated.
+ * </p>
  * 
  * The following list gives the mapping from Java to C/C++ types for arguments:
  * 
@@ -166,7 +169,8 @@ import com.intrigus.mavigen.parsing.JavaMethodParser.JniSection;
  * </pre>
  * 
  * To automatically compile and load the native code, see the classes {@link AntScriptGenerator}, {@link BuildExecutor} and
- * {@link JniGenSharedLibraryLoader} classes. </p>
+ * {@link JniGenSharedLibraryLoader} classes.
+ * </p>
  * 
  * @author mzechner */
 public class NativeCodeGenerator {
@@ -236,13 +240,11 @@ public class NativeCodeGenerator {
 		// process the source directory, emitting c/c++ files to jniDir
 		processDirectory(this.sourceDir);
 	}
-	
-	/**
-	 * Forces the generation of objective c files
+
+	/** Forces the generation of objective c files
 	 * @param force If true, forces the generation of obj c files regardless of their age
-	 * @return Returns this from chaining
-	 */
-	public NativeCodeGenerator forceGeneration(boolean force){
+	 * @return Returns this from chaining */
+	public NativeCodeGenerator forceGeneration (boolean force) {
 		forceGeneration = force;
 		return this;
 	}
@@ -328,9 +330,8 @@ public class NativeCodeGenerator {
 					throw new RuntimeException("Method '" + javaMethod.getName() + "' has no body");
 				}
 				CMethod cMethod = findCMethod(javaMethod, cMethods);
-				if (cMethod == null)
-					throw new RuntimeException("Couldn't find C method for Java method '" + javaMethod.getClassName() + "#"
-						+ javaMethod.getName() + "'");
+				if (cMethod == null) throw new RuntimeException(
+					"Couldn't find C method for Java method '" + javaMethod.getClassName() + "#" + javaMethod.getName() + "'");
 				emitJavaMethod(buffer, javaMethod, cMethod);
 			}
 		}
@@ -486,7 +487,7 @@ public class NativeCodeGenerator {
 			// as we will output JNI code to get pointers to strings, arrays
 			// and direct buffers.
 			Argument javaArg = javaMethod.getArguments().get(i);
-			if ((!javaMethod.isManual() && !javaArg.getType().isString()) && !javaArg.getType().isPlainOldDataType() && !javaArg.getType().isObject() && appendPrefix) {
+			if (!javaMethod.isManual() && !javaArg.getType().isPlainOldDataType() && !javaArg.getType().isObject() && appendPrefix) {
 				buffer.append(JNI_ARG_PREFIX);
 			}
 			// output the name of the argument
@@ -548,7 +549,7 @@ public class NativeCodeGenerator {
 		for (Argument arg : javaMethod.getArguments()) {
 			if (arg.getType().isString()) {
 				String type = "char*";
-				buffer.append("\t" + type + " " + arg.getName() + " = (" + type + ")env->GetStringUTFChars(" + JNI_ARG_PREFIX
+				buffer.append("\t" + type + " " + arg.getName() + " = (" + type + ")(*env)->GetStringUTFChars(env, " + JNI_ARG_PREFIX
 					+ arg.getName() + ", 0);\n");
 				additionalArgs.append(", ");
 				additionalArgs.append(type);
@@ -583,15 +584,16 @@ public class NativeCodeGenerator {
 		// emit cleanup code for arrays, must come first
 		for (Argument arg : javaMethod.getArguments()) {
 			if (arg.getType().isPrimitiveArray()) {
-				buffer.append("\tenv->ReleasePrimitiveArrayCritical(" + JNI_ARG_PREFIX + arg.getName() + ", " + arg.getName()
-					+ ", 0);\n");
+				buffer.append(
+					"\tenv->ReleasePrimitiveArrayCritical(" + JNI_ARG_PREFIX + arg.getName() + ", " + arg.getName() + ", 0);\n");
 			}
 		}
 
 		// emit cleanup code for strings
 		for (Argument arg : javaMethod.getArguments()) {
 			if (arg.getType().isString()) {
-				buffer.append("\tenv->ReleaseStringUTFChars(" + JNI_ARG_PREFIX + arg.getName() + ", " + arg.getName() + ");\n");
+				buffer
+					.append("\t(*env)->ReleaseStringUTFChars(env, " + JNI_ARG_PREFIX + arg.getName() + ", " + arg.getName() + ");\n");
 			}
 		}
 
